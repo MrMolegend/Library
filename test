@@ -1,0 +1,152 @@
+<<<<<<< HEAD
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        table th {
+            background-color: #f8f8f8;
+        }
+        .button {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Library Management System</h1>
+</header>
+
+<div class="container">
+    <section id="questions">
+        <h2>Questions to Answer</h2>
+        <ul>
+            <li>User Account: Student ID, First Name, Last Name</li>
+            <li>Loaning: Duration, Max Loans, Overdue Reminders, Queue for Next Pupil</li>
+            <li>Book Details: Author, Date, Title, Book ID, Genre</li>
+        </ul>
+    </section>
+
+    <section id="essential-features">
+        <h2>Essential Features</h2>
+        <ul>
+            <li>Catalogue System (Locating Books)</li>
+            <li>Adding/Removing Books - Admin</li>
+            <li>Borrow and Return System</li>
+            <li>Overdue Reminder Notifications</li>
+        </ul>
+    </section>
+
+    <section id="nice-features">
+        <h2>"Nice to Have" Features</h2>
+        <ul>
+            <li>Personalised Recommendation System</li>
+            <li>Analytics System (Most Loaned Books, Popular Genres, etc.)</li>
+            <li>Review System - Star Rating, Book of the Week</li>
+            <li>Reward System - Top Reader, Most Reviews</li>
+        </ul>
+    </section>
+
+    <section id="proposed-database">
+        <h2>Proposed Database Structure</h2>
+        <h3>Book Stock</h3>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Description</th>
+            </tr>
+            <tr><td>BookID</td><td>Primary Key</td></tr>
+            <tr><td>Title</td><td>Book Title</td></tr>
+            <tr><td>Author</td><td>Book Author</td></tr>
+            <tr><td>Date of Release</td><td>Publication Date</td></tr>
+            <tr><td>Genre</td><td>Book Genre</td></tr>
+            <tr><td>Availability Status</td><td>Available, Borrowed, Reserved</td></tr>
+        </table>
+
+        <h3>Users</h3>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Description</th>
+            </tr>
+            <tr><td>UserID</td><td>Primary Key</td></tr>
+            <tr><td>Name</td><td>Full Name</td></tr>
+            <tr><td>Email</td><td>User Email Address</td></tr>
+        </table>
+
+        <h3>Loans</h3>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Description</th>
+            </tr>
+            <tr><td>LoanID</td><td>Primary Key</td></tr>
+            <tr><td>BookID</td><td>Foreign Key</td></tr>
+            <tr><td>UserID</td><td>Foreign Key</td></tr>
+            <tr><td>Borrow Date</td><td>Date Borrowed</td></tr>
+            <tr><td>Due Date</td><td>Date Due</td></tr>
+            <tr><td>Status</td><td>Returned/Not Returned</td></tr>
+        </table>
+
+        <h3>Fines</h3>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Description</th>
+            </tr>
+            <tr><td>FineID</td><td>Primary Key</td></tr>
+            <tr><td>UserID</td><td>Foreign Key</td></tr>
+            <tr><td>Status</td><td>Email, Email HSM, School Bill</td></tr>
+            <tr><td>Description</td><td>Fine Details</td></tr>
+        </table>
+    </section>
+</div>
+
+</body>
+</html>
+>>>>>>> 61a24e3adfb7c66498988e9b0c8bc52b7c8f2963
