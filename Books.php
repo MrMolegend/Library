@@ -12,7 +12,7 @@
   Author:<input type="text" name="author"><br>
   Genre:<input type="text" name="genre"><br>
   Blurb:<input type="text" name="blurb"><br>
-  Rating:<input type="TINYINT(1)" name="rating"><br>
+  Rating:<input type="number" name="rating" max=5 min=0><br>
 
 
   <input type="file" name="cover" id="cover">

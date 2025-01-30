@@ -10,7 +10,7 @@ $conn = new PDO("mysql:host=$servername", $username, $password);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $sql = "CREATE DATABASE IF NOT EXISTS library";
 $conn->exec($sql);
-//next 3 lines optional only needed really if you want to go on an do more SQL here!
+//next 3 lines optional only needed really if you want to go on an do more SQL here
 $sql = "USE library";
 $conn->exec($sql);
 echo "DB created successfully";
