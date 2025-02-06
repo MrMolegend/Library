@@ -2,53 +2,76 @@
 <html lang="en">
 
 <head>
-    <title>THE book store</title>
-
-    <!-- Latest compiled and minified CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Latest compiled JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Library</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="icon" href="library-512.png" type="image/x-icon">
 </head>
 
 <body>
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">WebSiteName</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Page 1
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Page 1-1</a></li>
-                        <li><a class="dropdown-item" href="#">Page 1-2</a></li>
-                        <li><a class="dropdown-item" href="#">Page 1-3</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Page 2</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Page 3</a>
-                </li>
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html" class="logo-link"></a>
+                <img src="library-512.png" alt="NordLion Logo" >
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="catalogue.html">Catalogue</a></li>
+                <li><a href="analytics.html">Analytics</a></li>
+                <li><a href="reviews.html">Reviews</a></li>
+                <li><a href="fines.html">Fines</a></li>
+                <li><a href="login.php">Login</a></li>
             </ul>
-        </div>
-    </div>
-</nav>
+        </nav>
+    </header>
 
+    <section id="home" class="intro-section">
+        <h1>The Library</h1>
+        <img src="pexels-ivo-rainha-527110-1290141.jpg" alt="Pagani Zonda REVO Barchetta" class="featured-image">
+    </section>
+    <section id="current-cars">
+        <div class="inventory-container">
+            <div class="inventory-text">
+                <h1>Top Books in The Library</h1>
+                <div class="inventory-line">
+                    <h4>Some top reads for you!</h4>
+                </div>
+                <a href="catalogue.html" class="view-all-button">View All</a>
+            </div>
+            <div class="stock-gallery">
+                <figure class="gallery-item">
+                    <a href="the-winter-soldier.html">
+                        <img src="winter.jpg" alt="Koenigsegg CC850">
+                    </a>
+                    <figcaption>The Winter Soldier</figcaption>
+                </figure>
+                <figure class="gallery-item">
+                    <a href="beneath-a-scarlet-sky.html">
+                        <img src="scar.jpg" alt="Pagani Huayra Imola">
+                    </a>
+                    <figcaption>Beneath a Scarlet Sky</figcaption>
+                </figure>
+                <figure class="gallery-item">
+                    <a href="the-man-in-the-white-suit.html">
+                        <img src="man.jpg" alt="Koenigsegg Agera One:1">
+                    </a>
+                    <figcaption>The Man In The White Suit</figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-item center-item">
+                <h1>The Library</h1>
+            </div>
+        </div>
+        <p>&copy; 2024 The Library. All rights reserved.</p>
+    </footer>
 </body>
+
 </html>
