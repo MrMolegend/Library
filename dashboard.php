@@ -1,4 +1,6 @@
-<?php
+
+<?php include_once("navbar.php"); ?>
+
 // dashboard.php
 session_start();
 

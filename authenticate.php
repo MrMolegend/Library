@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["role"]     = $user["role"];
 
         // Redirect to dashboard or wherever
-        header("Location: index.php");
+        header("Location: dashboard.php");
 exit();
 
         exit();
