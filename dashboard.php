@@ -32,6 +32,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
     <!-- Example protected content -->
     <p>This is a protected dashboard page. You can show analytics, books to manage, etc.</p>
+    <p><a href="index.php">Go to Home Page</a></p>
+
 
     <p><a href="logout.php">Logout</a></p>
 </body>
