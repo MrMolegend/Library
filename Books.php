@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 // books.php - View and manage books
 session_start();
@@ -24,6 +25,8 @@ $stmt->execute();
 $books = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
+=======
+>>>>>>> 4dec44dd7a4b3d3d3f41a4f1845c05ef27907ccd
 <!DOCTYPE html>
 <html lang="en">
 <head>
