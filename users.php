@@ -1,34 +1,82 @@
+<?php
+// users.php - Manage users (Admin Only)
+session_start();
+include_once("connection.php");
+
+// Ensure only admins can access this page
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["role"] != 2) {
+    header("Location: login.php");
+    exit();
+}
+
+// Handle User Deletion
+if (isset($_GET['delete'])) {
+    $userId = intval($_GET['delete']);
+    $stmt = $conn->prepare("DELETE FROM tbl_users WHERE user_id = ?");
+    $stmt->execute([$userId]);
+    header("Location: users.php");
+    exit();
+}
+
+// Handle Role Updates
+if (isset($_POST['update_role'])) {
+    $userId = intval($_POST['user_id']);
+    $newRole = intval($_POST['role']);
+    $stmt = $conn->prepare("UPDATE tbl_users SET role = ? WHERE user_id = ?");
+    $stmt->execute([$newRole, $userId]);
+    header("Location: users.php");
+    exit();
+}
+
+// Fetch all users
+$stmt = $conn->prepare("SELECT * FROM tbl_users ORDER BY role DESC, forename ASC");
+$stmt->execute();
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    
-    <title>Page title</title>
-    
+    <meta charset="UTF-8">
+    <title>Manage Users - The Library</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-   <form action="add_users.php" method="post">
-    Forename:<input type="text" name="forename"><br>
-    Surname:<input type="text" name="surname"><br>
-    Address:<input type="text" name="address"><br>
-    E-mail Address:<input type="text" name="email"><br>
-    Password:<input type="text" name="password"><br>
-    Phone Number:<input type="text" name="phone_num" minlength="11" maxlength="11"><br>
-    Role:
-    <select name="role">
-        
-        <option value="user">user</option>
-        <option value="librarian">librarian</option>
-        <option value="admin">administrator</option>
-    
-    </select><br>
-
-    <input type="submit" value="submit" name="submit">
-</form>
-
-<?php
-	include_once('connection.php');
-	$stmt = $conn->prepare("SELECT * FROM tbl_users");
-	$stmt->execute();	
-?>   
+    <h1>Manage Users</h1>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+        <?php foreach ($users as $user): ?>
+            <tr>
+                <td><?php echo $user['user_id']; ?></td>
+                <td><?php echo htmlspecialchars($user['forename'] . " " . $user['surname']); ?></td>
+                <td><?php echo htmlspecialchars($user['email']); ?></td>
+                <td>
+                    <form method="post" action="users.php">
+                        <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
+                        <select name="role" onchange="this.form.submit()">
+                            <option value="0" <?php echo $user['role'] == 0 ? "selected" : ""; ?>>User</option>
+                            <option value="1" <?php echo $user['role'] == 1 ? "selected" : ""; ?>>Librarian</option>
+                            <option value="2" <?php echo $user['role'] == 2 ? "selected" : ""; ?>>Admin</option>
+                        </select>
+                        <input type="hidden" name="update_role" value="1">
+                    </form>
+                </td>
+                <td>
+                    <?php if ($user['role'] != 2): ?> 
+                        <a href="users.php?delete=<?php echo $user['user_id']; ?>" onclick="return confirm('Are you sure?');">Delete</a>
+                    <?php else: ?>
+                        Admin
+                    <?php endif; ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <p><a href="dashboard.php">Back to Dashboard</a></p>
 </body>
 </html>

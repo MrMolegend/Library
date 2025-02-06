@@ -1,9 +1,32 @@
 <?php
+// addbook.php - Add new books (Librarian/Admin Only)
+session_start();
 include_once("connection.php");
-#header('Location:books.php');
-array_map("htmlspecialchars", $_POST);
 
+// Ensure only librarians and admins can access
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["role"] < 1) {
+    header("Location: login.php");
+    exit();
+}
 
+<<<<<<< HEAD
+$error = "";
+$success = "";
+
+// Process form
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $title    = trim($_POST["title"]);
+    $author   = trim($_POST["author"]);
+    $genre    = trim($_POST["genre"]);
+    $blurb    = trim($_POST["blurb"]);
+    $rating   = intval($_POST["rating"]);
+    $t_copies = intval($_POST["t_copies"]);
+    $a_copies = intval($_POST["a_copies"]);
+    $cover    = trim($_POST["cover"]); // Assume image URL or file upload logic
+
+    if (empty($title) || empty($author) || empty($genre) || empty($blurb)) {
+        $error = "All fields are required!";
+=======
 $stmt = $conn->prepare("SELECT t_copies, a_copies FROM tbl_books WHERE title = :title AND author = :author");
 $stmt->bindParam(':title', $_POST["title"]);
 $stmt->bindParam(':author', $_POST["author"]);
@@ -50,8 +73,48 @@ $target_dir = "images/";
         } else {
             echo "The file was uploaded, but renaming failed.";
         }
+>>>>>>> 4dec44dd7a4b3d3d3f41a4f1845c05ef27907ccd
     } else {
-        echo "Sorry, there was an error uploading your file.";
+        $stmt = $conn->prepare("INSERT INTO tbl_books (title, author, genre, blurb, rating, t_copies, a_copies, cover) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$title, $author, $genre, $blurb, $rating, $t_copies, $a_copies, $cover]);
+        $success = "Book added successfully!";
     }
+<<<<<<< HEAD
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Books - The Library</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Add New Book</h1>
+    <?php if ($error): ?><p style="color: red;"><?php echo $error; ?></p><?php endif; ?>
+    <?php if ($success): ?><p style="color: green;"><?php echo $success; ?></p><?php endif; ?>
+
+    <form method="POST">
+        <label>Title:</label><br>
+        <input type="text" name="title" required><br><br>
+
+        <label>Author:</label><br>
+        <input type="text" name="author" required><br><br>
+
+        <label>Genre:</label><br>
+        <input type="text" name="genre" required><br><br>
+
+        <label>Blurb:</label><br>
+        <textarea name="blurb" required></textarea><br><br>
+
+        <button type="submit">Add Book</button>
+    </form>
+
+    <p><a href="books.php">Back to Books</a></p>
+</body>
+</html>
+=======
 $conn=null;
 ?>
+>>>>>>> 4dec44dd7a4b3d3d3f41a4f1845c05ef27907ccd
