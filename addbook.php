@@ -1,82 +1,66 @@
-
 <?php
+// addbook.php - Add new books (Librarian/Admin Only)
+session_start();
 include_once("connection.php");
-#header('Location:books.php');
-array_map("htmlspecialchars", $_POST);
 
+// Ensure only librarians and admins can access
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["role"] < 1) {
+    header("Location: login.php");
+    exit();
+}
 
-$stmt = $conn->prepare("INSERT INTO tbl_books (book_id,title,author,genre,blurb,rating,t_copies,a_copies,cover)
-VALUES (null,:title,:author,:genre,:blurb,:rating,null,null,:cover)");
+$error = "";
+$success = "";
 
+// Process form
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $title    = trim($_POST["title"]);
+    $author   = trim($_POST["author"]);
+    $genre    = trim($_POST["genre"]);
+    $blurb    = trim($_POST["blurb"]);
+    $rating   = intval($_POST["rating"]);
+    $t_copies = intval($_POST["t_copies"]);
+    $a_copies = intval($_POST["a_copies"]);
+    $cover    = trim($_POST["cover"]); // Assume image URL or file upload logic
 
-$stmt->bindParam(':title', $_POST["title"]);
-$stmt->bindParam(':author', $_POST["author"]);
-$stmt->bindParam(':genre', $_POST["genre"]);
-$stmt->bindParam(':blurb', $_POST["blurb"]);
-$stmt->bindParam(':rating', $_POST["rating"]);
-$stmt->bindParam(':cover', $_FILES["cover"]["name"]);
-$stmt->execute();
-
-$target_dir = "images/";
-    print_r($_FILES);
-    $target_file = $target_dir . basename($_FILES["cover"]["name"]);
-    $target_dir = "images/";
-    $original_file = $_FILES["cover"]["tmp_name"];
-    $original_filename = basename($_FILES["cover"]["name"]);
-    $target_file = $target_dir . $original_filename;
-    $new_file_name = $target_dir . $_POST["title"] . "." . strtolower(pathinfo($original_filename, PATHINFO_EXTENSION));
-    echo $target_file;
-    <?php
-    include_once("connection.php");
-    #header('Location:books.php');
-    array_map("htmlspecialchars", $_POST);
-    
-    
-    $stmt = $conn->prepare("INSERT INTO tbl_books (book_id,title,author,genre,blurb,rating,t_copies,a_copies,cover)
-    VALUES (null,:title,:author,:genre,:blurb,:rating,null,null,:cover)");
-    
-    
-    $stmt->bindParam(':title', $_POST["title"]);
-    $stmt->bindParam(':author', $_POST["author"]);
-    $stmt->bindParam(':genre', $_POST["genre"]);
-    $stmt->bindParam(':blurb', $_POST["blurb"]);
-    $stmt->bindParam(':rating', $_POST["rating"]);
-    $stmt->bindParam(':cover', $_FILES["cover"]["name"]);
-    $stmt->execute();
-    
-    $target_dir = "images/";
-        print_r($_FILES);
-        $target_file = $target_dir . basename($_FILES["cover"]["name"]);
-        $target_dir = "images/";
-        $original_file = $_FILES["cover"]["tmp_name"];
-        $original_filename = basename($_FILES["cover"]["name"]);
-        $target_file = $target_dir . $original_filename;
-        $new_file_name = $target_dir . $_POST["title"] . "." . strtolower(pathinfo($original_filename, PATHINFO_EXTENSION));
-        echo $target_file;
-        $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-        if (move_uploaded_file($original_file, $target_file)) {
-            if (rename($target_file, $new_file_name)) {
-                echo "The file " . htmlspecialchars($_POST["title"]) . " has been uploaded and renamed.";
-            } else {
-                echo "The file was uploaded, but renaming failed.";
-            }
-        } else {
-            echo "Sorry, there was an error uploading your file.";
-        }
-    $conn=null;
-    ?>
-    
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-    if (move_uploaded_file($original_file, $target_file)) {
-        if (rename($target_file, $new_file_name)) {
-            echo "The file " . htmlspecialchars($_POST["title"]) . " has been uploaded and renamed.";
-        } else {
-            echo "The file was uploaded, but renaming failed.";
-        }
+    if (empty($title) || empty($author) || empty($genre) || empty($blurb)) {
+        $error = "All fields are required!";
     } else {
-        echo "Sorry, there was an error uploading your file.";
+        $stmt = $conn->prepare("INSERT INTO tbl_books (title, author, genre, blurb, rating, t_copies, a_copies, cover) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$title, $author, $genre, $blurb, $rating, $t_copies, $a_copies, $cover]);
+        $success = "Book added successfully!";
     }
-$conn=null;
+}
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Books - The Library</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Add New Book</h1>
+    <?php if ($error): ?><p style="color: red;"><?php echo $error; ?></p><?php endif; ?>
+    <?php if ($success): ?><p style="color: green;"><?php echo $success; ?></p><?php endif; ?>
+
+    <form method="POST">
+        <label>Title:</label><br>
+        <input type="text" name="title" required><br><br>
+
+        <label>Author:</label><br>
+        <input type="text" name="author" required><br><br>
+
+        <label>Genre:</label><br>
+        <input type="text" name="genre" required><br><br>
+
+        <label>Blurb:</label><br>
+        <textarea name="blurb" required></textarea><br><br>
+
+        <button type="submit">Add Book</button>
+    </form>
+
+    <p><a href="books.php">Back to Books</a></p>
+</body>
+</html>
