@@ -139,14 +139,79 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Library - Login</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="icon" href="library-512.png" type="image/x-icon">
 </head>
+
 <body>
-    <div class="container">
-        <h1>Welcome, <?php echo htmlspecialchars($_SESSION["forename"]); ?>!</h1>
-        <p>Role: <?php echo ($_SESSION["role"] == 0 ? "User" : ($_SESSION["role"] == 1 ? "Librarian" : "Admin")); ?></p>
-        <a href="logout.php">Logout</a>
-    </div>
+    <!-- Header and Nav (same as home page) -->
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html" class="logo-link"></a>
+                <img src="library-512.png" alt="Library Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="catalogue.html">Catalogue</a></li>
+                <li><a href="analytics.html">Analytics</a></li>
+                <li><a href="reviews.html">Reviews</a></li>
+                <li><a href="fines.html">Fines</a></li>
+                <!-- Mark Login as active -->
+                <li><a href="login.php" class="active">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Optional Intro Section to match home page styling -->
+    <section id="home" class="intro-section">
+        <h1>The Library</h1>
+        <img src="pexels-ivo-rainha-527110-1290141.jpg" alt="Library Intro" class="featured-image">
+    </section>
+
+    <!-- Main content area for the login form -->
+    <section id="current-cars">
+        <div class="inventory-container">
+            <div class="inventory-text">
+                <h1>Login</h1>
+                <div class="inventory-line">
+                    <h4>Please enter your credentials below</h4>
+                </div>
+            </div>
+            <div class="stock-gallery">
+                <div class="login-form-container"><!-- Add your own styling in style.css -->
+
+                    <!-- Display error if exists (same as original login.php) -->
+                    <?php if (!empty($errorMessage)): ?>
+                        <p class="error"><?php echo htmlspecialchars($errorMessage); ?></p>
+                    <?php endif; ?>
+
+                    <!-- The form action points to your authenticate.php as before -->
+                    <form action="authenticate.php" method="post">
+                        <label>Email:</label>
+                        <input type="email" name="email" required><br>
+
+                        <label>Password:</label>
+                        <input type="password" name="password" required><br>
+
+                        <button type="submit">Login</button>
+                    </form>
+                    <!-- (Optional) Link to register or reset password can go here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (same as home page) -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-item center-item">
+                <h1>The Library</h1>
+            </div>
+        </div>
+        <p>&copy; 2024 The Library. All rights reserved.</p>
+    </footer>
 </body>
 </html>
